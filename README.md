@@ -1,6 +1,28 @@
 # Download WeChat Articles Skill
 
-按公众号名称和时间范围，批量归档微信公众号公开文章。支持单账号、多账号、最近 N 天和指定日期范围，输出完整 HTML、Markdown 标题汇总、HTML 索引和 JSON 清单。
+<p align="center">
+  <strong>输入公众号名称，按时间范围批量归档公开文章。</strong><br>
+  支持单账号、多账号、最近 N 天和指定日期，输出完整 HTML 与 Markdown 标题汇总。
+</p>
+
+<p align="center">
+  Codex Skill + Python CLI · 登录态仅保存在本地 · 不需要目标公众号管理权限
+</p>
+
+## 微信交流
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="./docs/images/wechat-qr.png" alt="公众号文章下载 Skill 微信交流群二维码" width="220"><br>
+      <sub>微信群：扫码加入 Codex Skill 与公众号采集交流</sub>
+    </td>
+    <td align="center">
+      <img src="./docs/images/wechat.png" alt="作者个人微信二维码" width="220"><br>
+      <sub>个人微信：添加时请备注“公众号 Skill”</sub>
+    </td>
+  </tr>
+</table>
 
 这个仓库同时提供：
 
@@ -284,6 +306,10 @@ python download-wechat-articles/scripts/test_wechat_articles.py
 download-wechat-articles-skill/
 ├── README.md
 ├── .gitignore
+├── docs/
+│   └── images/
+│       ├── wechat-qr.png
+│       └── wechat.png
 └── download-wechat-articles/
     ├── SKILL.md
     ├── agents/
