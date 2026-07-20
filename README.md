@@ -65,7 +65,48 @@
 - 可登录 [微信公众平台](https://mp.weixin.qq.com/) 的账号，个人订阅号即可。
 - 首次安装依赖和登录时需要网络连接。
 
-## 快速开始
+## 30 秒开始（推荐）
+
+不需要克隆仓库，也不需要自己输入 Python、venv 或 pip 命令。
+
+### 1. 在 Codex 中安装 Skill
+
+把下面这句话复制到 Codex 对话框：
+
+> 请使用 skill-installer 安装这个 Skill：https://github.com/aiwenjie777/download-wechat-articles-skill/tree/main/download-wechat-articles
+
+Codex 安装完成后，下一条消息即可开始使用。
+
+### 2. 直接说你想要什么
+
+例如：
+
+> 下载“梁靠谱”最近 7 天的公众号文章，保存完整 HTML 和标题汇总。
+
+或者：
+
+> 查找“梁靠谱”、“宝玉AI”和“数字生命卡兹克”最近 3 天的文章，生成一份 Markdown 标题汇总。
+
+Skill 会代你完成：
+
+- 检查 Python、Chrome 和必要依赖。
+- 在项目中创建隔离的虚拟环境。
+- 首次使用时打开微信公众平台官方登录页。
+- 搜索一个或多个公众号。
+- 按时间范围下载 HTML。
+- 生成 Markdown 标题汇总、`index.html` 和 `manifest.json`。
+- 把结果文件直接链接给你。
+
+首次使用时，你只需要：
+
+1. 同意 Codex 安装必要依赖并打开 Chrome。
+2. 在微信公众平台官方页面完成一次扫码或登录。
+
+之后会复用本地登录态，直到微信要求重新登录。Codex 不会询问或保存你的微信密码。
+
+## 手动 CLI（仅高级用户）
+
+普通用户可以跳过整节。只有需要直接调试 Python 脚本时，才需要以下命令。
 
 ### 1. 克隆仓库
 
@@ -223,36 +264,6 @@ HTML 文件保存微信服务器返回的完整页面，但图片、音频、视
 - `0`：全部成功。
 - `1`：登录、参数或顶层请求错误。
 - `2`：部分公众号或文章失败，其他结果已保留。
-
-## 安装为 Codex Skill
-
-### 项目级安装
-
-在需要使用的项目根目录执行：
-
-```bash
-mkdir -p .codex/skills
-cp -R /path/to/download-wechat-articles-skill/download-wechat-articles .codex/skills/
-```
-
-### 全局安装
-
-```bash
-mkdir -p ~/.codex/skills
-cp -R download-wechat-articles ~/.codex/skills/
-```
-
-安装后可直接对 Codex 说：
-
-```text
-下载“梁靠谱”最近 7 天的公众号文章，保存为 HTML。
-```
-
-```text
-查找“梁靠谱”、“宝玉AI”和“数字生命卡兹克”最近 3 天的文章，生成一份标题汇总。
-```
-
-Skill 会指导 Codex 使用仓库中的确定性脚本，而不是每次临时重写抓取逻辑。
 
 ## 运行测试
 

@@ -5,7 +5,7 @@ description: Download public WeChat Official Account articles for one or multipl
 
 # Download WeChat Articles
 
-Use the bundled `scripts/wechat_articles.py` CLI. It relies on a valid login session for the user's own WeChat Official Account backend; it does not bypass authentication.
+Complete the workflow end to end with the bundled `scripts/wechat_articles.py` CLI. Do not ask the user to clone repositories or type terminal commands unless they explicitly request manual CLI instructions. The tool relies on a valid login session for the user's own WeChat Official Account backend; it does not bypass authentication.
 
 ## Workflow
 
@@ -14,36 +14,41 @@ Use the bundled `scripts/wechat_articles.py` CLI. It relies on a valid login ses
    - Explicit dates -> `--start YYYY-MM-DD --end YYYY-MM-DD`.
    - If only a start date is supplied, use today as the end date.
    - Treat relative days as inclusive calendar days in `Asia/Shanghai`.
-2. Locate authentication in this order:
+2. Resolve this Skill's directory from the loaded `SKILL.md`, then use its bundled `scripts/wechat_articles.py` and `scripts/requirements.txt` by absolute path.
+3. Prepare a project-local runtime.
+   - Prefer `.venv-wechat-skill` in the user's current project.
+   - If the environment or dependencies are missing, briefly explain that `requests` and Selenium are required, request approval, create the virtual environment, and install `scripts/requirements.txt`.
+   - Do not install into the system Python when a project-local virtual environment can be used.
+4. Locate authentication in this order:
    - An explicit `--auth PATH` supplied by the user.
    - `WECHAT_MP_AUTH_FILE`.
    - `./.wechat-mp-auth.json`.
    - `./WeChat_Article/cookie.json` for compatibility with the cloned project.
-3. If authentication is absent or expired, ask before installing dependencies or opening a browser. Then run:
+5. If authentication is absent or expired, ask before opening a browser. Run the login command with the project-local virtual environment:
 
    ```bash
-   python3 scripts/wechat_articles.py login --auth .wechat-mp-auth.json
+   .venv-wechat-skill/bin/python /absolute/path/to/scripts/wechat_articles.py login --auth .wechat-mp-auth.json
    ```
 
-   The user must finish the official `mp.weixin.qq.com` login in Chrome. Never request the user's password in chat.
-4. Run the download command from the user's project directory:
+   On Windows, use `.venv-wechat-skill\Scripts\python.exe`. The user must finish the official `mp.weixin.qq.com` login in Chrome. Never request the user's password in chat.
+6. Run the download command from the user's project directory with the same project-local Python:
 
    ```bash
-   python3 scripts/wechat_articles.py download \
+   .venv-wechat-skill/bin/python /absolute/path/to/scripts/wechat_articles.py download \
      --account "公众号名称" \
      --account "另一个公众号" \
      --days 7 \
      --output downloads/wechat
    ```
 
-5. Accept repeated `--account` arguments. Continue processing other accounts if one account fails.
-6. Preserve the generated Markdown title collection named `YYYY-MM-DD（最近N天）.md`. It must contain a summary and a table with title, publication time, and original link, grouped by account. For multiple accounts, use the aggregate file in the date-range collection directory.
-7. Report resolved account nicknames, requested interval, number of matching articles, output directory, and any failed accounts or downloads. Link the Markdown title collection, `index.html`, and `manifest.json`.
+7. Accept repeated `--account` arguments. Continue processing other accounts if one account fails.
+8. Preserve the generated Markdown title collection named `YYYY-MM-DD（最近N天）.md`. It must contain a summary and a table with title, publication time, and original link, grouped by account. For multiple accounts, use the aggregate file in the date-range collection directory.
+9. Report resolved account nicknames, requested interval, number of matching articles, output directory, and any failed accounts or downloads. Link the Markdown title collection, `index.html`, and `manifest.json`.
 
 ## Explicit Date Range
 
 ```bash
-python3 scripts/wechat_articles.py download \
+.venv-wechat-skill/bin/python /absolute/path/to/scripts/wechat_articles.py download \
   --account "公众号名称" \
   --start 2026-07-01 \
   --end 2026-07-15 \
@@ -64,5 +69,5 @@ python3 scripts/wechat_articles.py download \
 Run the deterministic offline tests:
 
 ```bash
-python3 scripts/test_wechat_articles.py
+.venv-wechat-skill/bin/python /absolute/path/to/scripts/test_wechat_articles.py
 ```
