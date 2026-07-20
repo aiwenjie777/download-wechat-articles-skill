@@ -1,12 +1,12 @@
-# Download WeChat Articles Skill
+# 微信公众号文章下载助手
 
 <p align="center">
-  <strong>输入公众号名称，按时间范围批量归档公开文章。</strong><br>
-  支持单账号、多账号、最近 N 天和指定日期，输出完整 HTML 与 Markdown 标题汇总。
+  <strong>告诉 Codex 公众号名称和时间，它帮你把文章整理好。</strong><br>
+  不用写代码，不用学命令，也不用一篇一篇复制。
 </p>
 
 <p align="center">
-  Codex Skill + Python CLI · 登录态仅保存在本地 · 不需要目标公众号管理权限
+  可以同时查多个公众号 · 可以选最近几天 · 自动生成标题汇总和完整网页
 </p>
 
 ## 微信交流
@@ -15,7 +15,7 @@
   <tr>
     <td align="center">
       <img src="./docs/images/wechat-qr.png" alt="公众号文章下载 Skill 微信交流群二维码" width="220"><br>
-      <sub>微信群：扫码加入 Codex Skill 与公众号采集交流</sub>
+      <sub>微信群：扫码加入交流</sub>
     </td>
     <td align="center">
       <img src="./docs/images/wechat.png" alt="作者个人微信二维码" width="220"><br>
@@ -24,155 +24,194 @@
   </tr>
 </table>
 
-> 微信群二维码有时效性。如左侧群码已失效，请添加右侧个人微信并备注“公众号 Skill”，邀请进群。
+> 微信群二维码有时效性。如果群码已失效，请添加右侧个人微信，备注“公众号 Skill”，邀请进群。
 
-这个仓库同时提供：
+## 它能帮你做什么
 
-- 可独立运行的 Python CLI。
-- 可安装到 Codex 项目或全局目录的 `download-wechat-articles` Skill。
-- 不需要目标公众号的管理权限，但需要你自己拥有一个可登录的微信公众平台账号。
+你可以直接对 Codex 说：
 
-> 请只用于归档公开文章，并遵守微信平台规则、著作权要求和当地法律。
+> 帮我找“梁靠谱”最近 7 天的公众号文章。
 
-## 功能
+它会自动帮你：
 
-- 按公众号昵称或微信号搜索目标账号。
-- 支持最近 1、3、7 天等任意天数。
-- 支持 `YYYY-MM-DD` 起止日期。
-- 同一条命令可重复传入多个 `--account`。
-- 下载每篇文章的完整服务器 HTML 响应。
-- 自动生成按公众号分组的 Markdown 标题汇总。
-- 自动生成 `index.html` 和 `manifest.json`。
-- 复用登录 Cookie，无需每次扫码。
-- 兼容 [`1061700625/WeChat_Article`](https://github.com/1061700625/WeChat_Article) 生成的 `cookie.json`。
-- 兼容旧版正文容器和微信新版客户端渲染 HTML。
-- 一个公众号失败时，其他公众号仍会继续处理。
+- 找到正确的公众号。
+- 只收集你指定时间内的文章。
+- 保存每篇文章的完整网页。
+- 整理一份“标题、发布时间、原文链接”汇总。
+- 把结果文件直接发给你。
 
-## 实现原理
+也可以一次找多个公众号：
 
-1. 通过 Selenium 打开微信公众平台官网，由用户亲自扫码或登录。
-2. 在本地保存后台 `token` 和 Cookie，文件权限尽量设为仅当前用户可读写。
-3. 调用微信公众平台后台的公众号搜索和文章列表接口。
-4. 按北京时间过滤文章发布时间，越过开始日期后提前停止翻页。
-5. 下载命中文章并生成索引、清单和标题汇总。
+> 帮我找“梁靠谱”、“宝玉AI”和“数字生命卡兹克”最近 3 天的文章，生成一份标题汇总。
 
-微信后台接口并非公开稳定 API，平台改版后可能需要更新脚本。
+## 30 秒开始
 
-## 环境要求
-
-- Python 3.9 或更高版本。
-- Google Chrome。
-- 可登录 [微信公众平台](https://mp.weixin.qq.com/) 的账号，个人订阅号即可。
-- 首次安装依赖和登录时需要网络连接。
-
-## 30 秒开始（推荐）
-
-不需要克隆仓库，也不需要自己输入 Python、venv 或 pip 命令。
-
-### 1. 在 Codex 中安装 Skill
+### 第一步：让 Codex 安装
 
 把下面这句话复制到 Codex 对话框：
 
-> 请使用 skill-installer 安装这个 Skill：https://github.com/aiwenjie777/download-wechat-articles-skill/tree/main/download-wechat-articles
+> 请帮我安装这个 Skill：https://github.com/aiwenjie777/download-wechat-articles-skill/tree/main/download-wechat-articles
 
-Codex 安装完成后，下一条消息即可开始使用。
+Codex 会帮你完成安装。安装成功后，下一条消息就可以使用。
 
-### 2. 直接说你想要什么
+### 第二步：告诉 Codex 你要找什么
 
 例如：
 
-> 下载“梁靠谱”最近 7 天的公众号文章，保存完整 HTML 和标题汇总。
+> 找“梁靠谱”最近 7 天的文章。
 
 或者：
 
-> 查找“梁靠谱”、“宝玉AI”和“数字生命卡兹克”最近 3 天的文章，生成一份 Markdown 标题汇总。
+> 找“梁靠谱”、“宝玉AI”最近 3 天的文章。
 
-Skill 会代你完成：
+也可以选具体日期：
 
-- 检查 Python、Chrome 和必要依赖。
-- 在项目中创建隔离的虚拟环境。
-- 首次使用时打开微信公众平台官方登录页。
-- 搜索一个或多个公众号。
-- 按时间范围下载 HTML。
-- 生成 Markdown 标题汇总、`index.html` 和 `manifest.json`。
-- 把结果文件直接链接给你。
+> 找“梁靠谱”从 2026 年 7 月 1 日到 7 月 15 日发布的文章。
 
-首次使用时，你只需要：
+就这么简单。
 
-1. 同意 Codex 安装必要依赖并打开 Chrome。
-2. 在微信公众平台官方页面完成一次扫码或登录。
+## 第一次使用时，你需要做什么
 
-之后会复用本地登录态，直到微信要求重新登录。Codex 不会询问或保存你的微信密码。
+第一次运行时，Codex 会请求你同意安装必要组件，并打开 Chrome。
 
-## 手动 CLI（仅高级用户）
+你只需要：
 
-普通用户可以跳过整节。只有需要直接调试 Python 脚本时，才需要以下命令。
+1. 点击同意。
+2. 在打开的微信公众平台官方页面中扫码或登录。
+3. 等待 Codex 整理完成。
 
-### 1. 克隆仓库
+不需要把微信密码发给 Codex。
+
+登录成功后，以后会自动复用本地登录状态，不需要每次扫码。只有微信要求重新登录时，才需要再扫一次。
+
+## 你会得到什么
+
+### 1. 标题汇总
+
+一份可以直接打开的 Markdown 文档，按公众号分组，里面有：
+
+- 文章标题。
+- 发布时间。
+- 可点击的微信原文链接。
+- 每个公众号发了多少篇。
+
+文件名会像这样：
+
+```text
+2026-07-21（最近3天）.md
+```
+
+### 2. 每篇文章的完整网页
+
+每篇文章会单独保存，方便你查看、归档和后续整理。
+
+### 3. 一个简单索引
+
+打开 `index.html`，就能看到这次收集的文章列表。
+
+## 常见用法
+
+### 找一个公众号
+
+> 找“梁靠谱”最近 7 天的文章。
+
+### 同时找多个公众号
+
+> 找“梁靠谱”、“宝玉AI”和“数字生命卡兹克”最近 3 天的文章。
+
+### 自定义时间
+
+> 找“梁靠谱”从 7 月 1 日到 7 月 15 日的文章。
+
+### 只想整理标题
+
+> 找这 5 个公众号最近 3 天的文章，把标题、时间和原文链接整理成一份 Markdown。
+
+## 使用前需要知道
+
+- 你需要有一个能登录微信公众平台的账号，个人订阅号也可以。
+- 要收集的目标公众号不需要是你自己的。
+- 这个工具只收集公开文章，不能获取粉丝、私信、草稿或其他后台隐私数据。
+- 请遵守微信平台规则和著作权要求。
+- 微信页面或规则发生变化时，工具可能需要更新。
+
+## 常见问题
+
+### 需要会编程吗？
+
+不需要。安装好 Skill 以后，直接用普通话告诉 Codex 你想找哪些公众号和哪段时间。
+
+### 需要目标公众号的密码吗？
+
+不需要。你只需要登录自己的微信公众平台账号。
+
+### 每次都要扫码吗？
+
+不用。第一次登录后会保存本地登录状态。失效后，Codex 会提示你重新登录。
+
+### 可以一次找多个公众号吗？
+
+可以。直接在一句话中写出多个公众号名称即可。结果会按公众号分组。
+
+### 某个公众号显示 0 篇，是失败了吗？
+
+不一定。如果没有错误提示，通常表示该公众号在指定时间内没有发布新文章。
+
+### 出现“访问频繁”怎么办？
+
+先停一会再试。不要连续反复点击，也不要用多个账号轮换尝试。
+
+## 隐私与安全
+
+- 登录状态只保存在你自己的电脑上。
+- 不要把 `.wechat-mp-auth.json` 或 `cookie.json` 发给其他人。
+- Codex 不需要知道你的微信密码。
+- 对文章进行转载、再发布或商业使用前，请自行确认授权。
+
+<details>
+<summary><strong>开发者与命令行说明（普通用户不需要打开）</strong></summary>
+
+### 环境要求
+
+- Python 3.9 或更高版本。
+- Google Chrome。
+- 可登录微信公众平台的账号。
+
+### 手动安装
 
 ```bash
 git clone https://github.com/aiwenjie777/download-wechat-articles-skill.git
 cd download-wechat-articles-skill
-```
-
-### 2. 创建虚拟环境
-
-macOS / Linux：
-
-```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-Windows PowerShell：
-
-```powershell
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 3. 安装依赖
-
-```bash
 python -m pip install -r download-wechat-articles/scripts/requirements.txt
 ```
 
-### 4. 首次登录
+Windows PowerShell 激活虚拟环境：
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+### 手动登录
 
 ```bash
 python download-wechat-articles/scripts/wechat_articles.py login \
   --auth .wechat-mp-auth.json
 ```
 
-Chrome 打开后，在微信公众平台完成登录。脚本检测到后台首页后会自动保存登录态并关闭 Chrome。
-
-`.wechat-mp-auth.json` 包含敏感 Cookie，已被本仓库的 `.gitignore` 忽略。不要将它发给其他人或提交到 Git。
-
-### 5. 下载文章
-
-下载单个公众号最近 7 天的文章：
-
-```bash
-python download-wechat-articles/scripts/wechat_articles.py download \
-  --account "梁靠谱" \
-  --days 7 \
-  --auth .wechat-mp-auth.json \
-  --output downloads/wechat
-```
-
-同时下载多个公众号最近 3 天的文章：
+### 手动下载
 
 ```bash
 python download-wechat-articles/scripts/wechat_articles.py download \
   --account "梁靠谱" \
   --account "宝玉AI" \
-  --account "数字生命卡兹克" \
   --days 3 \
   --auth .wechat-mp-auth.json \
   --output downloads/wechat
 ```
 
-## 指定日期范围
+指定日期：
 
 ```bash
 python download-wechat-articles/scripts/wechat_articles.py download \
@@ -183,156 +222,39 @@ python download-wechat-articles/scripts/wechat_articles.py download \
   --output downloads/wechat
 ```
 
-- `--start` 必须与 `--days` 二选一。
-- 只传 `--start` 时，结束日期默认为当天。
-- “最近 N 天”按 `Asia/Shanghai` 时区的自然日包含计算。例如 7 月 21 日运行 `--days 3`，范围为 7 月 19 日 00:00:00 至 7 月 21 日 23:59:59。
-
-## 登录态查找顺序
-
-下载命令会按以下顺序查找登录文件：
-
-1. `--auth PATH` 显式指定的文件。
-2. `WECHAT_MP_AUTH_FILE` 环境变量。
-3. 当前目录的 `.wechat-mp-auth.json`。
-4. 当前目录的 `WeChat_Article/cookie.json`。
-
-登录失效后，重新执行 `login` 命令覆盖本地登录文件即可。
-
-## 输出结构
-
-单个公众号：
-
-```text
-downloads/wechat/
-└── 公众号名称/
-    └── 2026-07-15_2026-07-21/
-        ├── 2026-07-20_092005_文章标题.html
-        ├── index.html
-        ├── manifest.json
-        └── 2026-07-21（最近7天）.md
-```
-
-多个公众号会保留每个账号的独立目录，并额外生成汇总目录：
-
-```text
-downloads/wechat/
-├── 公众号A/...
-├── 公众号B/...
-└── 2026-07-19_2026-07-21/
-    ├── manifest.json
-    └── 2026-07-21（最近3天）.md
-```
-
-### Markdown 标题汇总
-
-汇总文档按公众号分组，包含：
-
-- 公众号名称及篇数。
-- 文章标题。
-- 北京时间发布时间。
-- 可点击的微信原文链接。
-- 抓取失败的公众号及原因。
-
-### HTML 说明
-
-HTML 文件保存微信服务器返回的完整页面，但图片、音频、视频和脚本仍可能引用微信远程资源，因此不保证完全离线。
-
-## CLI 参数
-
-### `login`
-
-| 参数 | 默认值 | 说明 |
-|---|---:|---|
-| `--auth` | `.wechat-mp-auth.json` | 登录态保存路径 |
-| `--timeout` | `600` | 等待登录完成的秒数 |
-
-### `download`
-
-| 参数 | 必填 | 说明 |
-|---|---:|---|
-| `--account` | 是 | 公众号精确昵称或微信号；可重复传入 |
-| `--days` | 二选一 | 包含当天的最近 N 个自然日 |
-| `--start` | 二选一 | 开始日期，格式 `YYYY-MM-DD` |
-| `--end` | 否 | 结束日期，格式 `YYYY-MM-DD` |
-| `--auth` | 否 | 登录态文件路径 |
-| `--output` | 否 | 输出根目录，默认 `downloads/wechat` |
-| `--delay` | 否 | 请求间隔秒数，默认 `5`，最低 `1` |
-| `--skip-auth-check` | 否 | 仅调试用；跳过下载前的登录态校验 |
-
-退出码：
-
-- `0`：全部成功。
-- `1`：登录、参数或顶层请求错误。
-- `2`：部分公众号或文章失败，其他结果已保留。
-
-## 运行测试
-
-离线测试不会访问微信，也不需要 Cookie：
+### 运行测试
 
 ```bash
 python download-wechat-articles/scripts/test_wechat_articles.py
 ```
 
-测试覆盖：
+### 工作原理
 
-- 最近 N 天的日期边界。
-- 起止日期校验。
-- 原 `WeChat_Article` Cookie 格式兼容。
-- 文章时间过滤和提前停止分页。
-- 旧版和新版微信文章 HTML 识别。
-- 单账号与多账号 Markdown 汇总。
-- HTML、索引和清单文件生成。
+Skill 通过 Selenium 打开微信公众平台官方页面，由用户完成登录，然后使用已授权的后台会话搜索公众号和文章列表。按北京时间过滤文章后，保存 HTML 并生成汇总文件。
 
-## 常见问题
+微信后台接口不是公开稳定 API，平台改版后可能需要更新脚本。
 
-### 提示登录失效
-
-重新执行 `login` 命令，完成微信官方页面登录。
-
-### 搜索到多个同名公众号
-
-脚本不会在模糊结果中盲目选第一个。请改用完整精确昵称或公众号微信号。
-
-### 出现“访问频繁”或频率控制
-
-停止当前任务，稍后重试，并调大 `--delay`。不要轮换账号或尝试绕过平台控制。
-
-### 文章 HTML 中的图片无法离线显示
-
-当前版本保存的是服务器原始 HTML，其中资源可能仍指向微信 CDN。请在有网络时打开。
-
-### Chrome 或 ChromeDriver 启动失败
-
-先确认 Chrome 已安装且可正常启动。Selenium Manager 通常会自动处理匹配的驱动程序，首次运行可能需要下载驱动。
-
-## 安全说明
-
-- 不要在命令、Issue、聊天或日志中粘贴 Cookie 或 token。
-- 不要将 `.wechat-mp-auth.json` 、`cookie.json` 或下载结果提交到公开仓库。
-- “记住密码”不是本工具的必需功能；本工具不会询问或保存微信密码。
-- 建议使用低频率、小时间窗和必要的公众号清单。
-- 对第三方文章进行再发布或商业使用前，请自行确认授权。
-
-## 项目结构
+### 项目结构
 
 ```text
 download-wechat-articles-skill/
 ├── README.md
-├── .gitignore
-├── docs/
-│   └── images/
-│       ├── wechat-qr.png
-│       └── wechat.png
+├── docs/images/
 └── download-wechat-articles/
     ├── SKILL.md
-    ├── agents/
-    │   └── openai.yaml
+    ├── agents/openai.yaml
     └── scripts/
         ├── requirements.txt
         ├── test_wechat_articles.py
         └── wechat_articles.py
 ```
 
+</details>
+
 ## 致谢
 
-公众号搜索和文章列表思路参考了 [`1061700625/WeChat_Article`](https://github.com/1061700625/WeChat_Article)。本项目对登录、日期过滤、多账号处理、文章页兼容、Markdown 汇总和安全输出进行了重新封装。
+公众号搜索和文章列表思路参考了 [`1061700625/WeChat_Article`](https://github.com/1061700625/WeChat_Article)。
+
+---
+
+请只用于收集公开文章，并遵守微信平台规则、著作权要求和当地法律。
