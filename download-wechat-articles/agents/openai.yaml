@@ -1,0 +1,4 @@
+interface:
+  display_name: "公众号文章下载"
+  short_description: "按账号和时间批量下载公众号 HTML 并汇总标题"
+  default_prompt: "Use $download-wechat-articles to download recent articles from one or more WeChat public accounts and create a grouped title summary."
