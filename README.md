@@ -1,7 +1,7 @@
 # 微信公众号文章下载助手
 
 <p align="center">
-  <strong>告诉 Codex 公众号名称和时间，它帮你把文章整理好。</strong><br>
+  <strong>告诉 Codex / workbuddy 公众号名称和时间，它帮你把文章整理好。</strong><br>
   不用写代码，不用学命令，也不用一篇一篇复制。
 </p>
 
