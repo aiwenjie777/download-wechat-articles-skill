@@ -52,7 +52,7 @@
 
 > 请帮我安装这个 Skill：https://github.com/aiwenjie777/download-wechat-articles-skill/tree/main/download-wechat-articles
 
-Codex 会帮你完成安装。安装成功后，下一条消息就可以使用。
+Codex 会自动帮你完成安装。安装成功后，下一条消息就可以直接使用。
 
 ### 第二步：告诉 Codex 你要找什么
 
