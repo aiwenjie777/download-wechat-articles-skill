@@ -14,7 +14,7 @@
 <table align="center">
   <tr>
     <td align="center">
-      <img src="./docs/images/wechat-qr.png" alt="公众号文章下载 Skill 微信交流群二维码" width="220"><br>
+      <img src="docs/images/wechat-1qr.png" alt="公众号文章下载 Skill 微信交流群二维码" width="220"><br>
       <sub>微信群：扫码加入交流</sub>
     </td>
     <td align="center">
